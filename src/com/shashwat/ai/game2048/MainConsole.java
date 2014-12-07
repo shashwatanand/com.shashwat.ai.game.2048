@@ -1,6 +1,12 @@
 package com.shashwat.ai.game2048;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+
+import com.shashwat.ai.game2048.model.Container;
+import com.shashwat.ai.game2048.model.DirectionEnum;
+import com.shashwat.ai.game2048.model.StatusEnum;
 
 public class MainConsole {
 	public static void main(String[] args) {
@@ -38,35 +44,36 @@ public class MainConsole {
 	
 	public static void playGame() throws CloneNotSupportedException {
 		System.out.println("2048 Game!");
-		System.out.println("Use 8 for UP, 6 for RIGHT, 2 for DOWN and 4 for LEFT. Type a to play automatically and q to exit. Press enter to submit your choice.");
+		System.out
+				.println("Use 8 for UP, 6 for RIGHT, 2 for DOWN and 4 for LEFT. Type a to play automatically and q to exit. Press enter to submit your choice.");
 
 		int hintDepth = 7;
-		Board theGame = new Board();
-		Direction hint = AIsolver.findBestMove(theGame, hintDepth);
-		printBoard(theGame.getBoardArray(), theGame.getScore(), hint);
+		Container game = new Container();
+		DirectionEnum hint = AIsolver.findBestMove(game, hintDepth);
+		printBoard(game.getContainerArray(), game.getScore(), hint);
 
 		try {
 			InputStreamReader unbuffered = new InputStreamReader(System.in,
 					"UTF8");
 			char inputChar;
 
-			ActionStatus result = ActionStatus.CONTINUE;
-			while (result == ActionStatus.CONTINUE
-					|| result == ActionStatus.INVALID_MOVE) {
+			StatusEnum result = StatusEnum.CONTINUE;
+			while (result == StatusEnum.CONTINUE
+					|| result == StatusEnum.INCORRECT_MOVE) {
 				inputChar = (char) unbuffered.read();
 				// inputChar = 'a';
 				if (inputChar == '\n' || inputChar == '\r') {
 					continue;
 				} else if (inputChar == '8') {
-					result = theGame.action(Direction.UP);
+					result = game.action(DirectionEnum.UP);
 				} else if (inputChar == '6') {
-					result = theGame.action(Direction.RIGHT);
+					result = game.action(DirectionEnum.RIGHT);
 				} else if (inputChar == '2') {
-					result = theGame.action(Direction.DOWN);
+					result = game.action(DirectionEnum.DOWN);
 				} else if (inputChar == '4') {
-					result = theGame.action(Direction.LEFT);
+					result = game.action(DirectionEnum.LEFT);
 				} else if (inputChar == 'a') {
-					result = theGame.action(hint);
+					result = game.action(hint);
 				} else if (inputChar == 'q') {
 					System.out.println("Game ended, user quit.");
 					break;
@@ -76,16 +83,16 @@ public class MainConsole {
 					continue;
 				}
 
-				if (result == ActionStatus.CONTINUE
-						|| result == ActionStatus.INVALID_MOVE) {
-					hint = AIsolver.findBestMove(theGame, hintDepth);
+				if (result == StatusEnum.CONTINUE
+						|| result == StatusEnum.INCORRECT_MOVE) {
+					hint = AIsolver.findBestMove(game, hintDepth);
 				} else {
 					hint = null;
 				}
-				printBoard(theGame.getBoardArray(), theGame.getScore(), hint);
+				printBoard(game.getContainerArray(), game.getScore(), hint);
 
-				if (result != ActionStatus.CONTINUE) {
-					System.out.println(result.getDescription());
+				if (result != StatusEnum.CONTINUE) {
+					System.out.println(result.getDesc());
 				}
 			}
 		} catch (IOException e) {
