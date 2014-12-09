@@ -50,7 +50,7 @@ public class MainConsole {
 		int hintDepth = 7;
 		Container game = new Container();
 		DirectionEnum hint = AIsolver.findBestMove(game, hintDepth);
-		printBoard(game.getContainerArray(), game.getScore(), hint);
+		printGameSnapshot(game.getContainerArray(), game.getScore(), hint);
 
 		try {
 			InputStreamReader unbuffered = new InputStreamReader(System.in,
@@ -89,7 +89,7 @@ public class MainConsole {
 				} else {
 					hint = null;
 				}
-				printBoard(game.getContainerArray(), game.getScore(), hint);
+				printGameSnapshot(game.getContainerArray(), game.getScore(), hint);
 
 				if (result != StatusEnum.CONTINUE) {
 					System.out.println(result.getDesc());
@@ -100,7 +100,7 @@ public class MainConsole {
 		}
 	}
 	
-	public static void printBoard(int[][] containerArray, int score, DirectionEnum direction) {
+	public static void printGameSnapshot(int[][] containerArray, int score, DirectionEnum direction) {
 		System.out.println("=======================");
 		System.out.println("Score:\t" + String.valueOf(score));
 		System.out.println();
