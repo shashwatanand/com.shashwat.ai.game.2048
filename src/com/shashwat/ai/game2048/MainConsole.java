@@ -99,4 +99,20 @@ public class MainConsole {
 			System.err.println(e);
 		}
 	}
+	
+	public static void printBoard(int[][] containerArray, int score, DirectionEnum direction) {
+		System.out.println("=======================");
+		System.out.println("Score:\t" + String.valueOf(score));
+		System.out.println();
+		System.out.println("Direction:\t" + direction);
+		System.out.println();
+
+		for (int i = 0; i < containerArray.length; ++i) {
+			for (int j = 0; j < containerArray[i].length; ++j) {
+				System.out.print(containerArray[i][j] + "\t");
+			}
+			System.out.println();
+		}
+		System.out.println("=======================");
+	}
 }
