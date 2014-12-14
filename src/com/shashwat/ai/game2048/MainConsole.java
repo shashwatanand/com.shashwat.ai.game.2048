@@ -12,11 +12,12 @@ public class MainConsole {
 	public static void main(String[] args) {
 		System.out.println("Java version of 2048");
 		System.out.println("====================");
+		Scanner scanner = null;
 		while (true) {
 			showMenu();
 			int option;
 			try {
-				Scanner scanner = new Scanner(System.in);
+				scanner = new Scanner(System.in);
 				option = scanner.nextInt();
 				switch (option) {
 				case 1:
@@ -28,6 +29,10 @@ public class MainConsole {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				if (scanner != null) {
+					scanner.close();
+				}
 			}
 		}
 	}
