@@ -168,4 +168,26 @@ public class Container implements Cloneable {
 		
 		return points;
 	}
+	
+	private void rotateLeft() {
+		int[][] curContainer = new int[CONTAINER_SIZE][CONTAINER_SIZE];
+		
+		for (int i = 0; i < CONTAINER_SIZE; i++) {
+			for (int j = 0; j < CONTAINER_SIZE; j++) {
+				curContainer[CONTAINER_SIZE - j - 1][i] = this.containerArray[i][j];
+			}
+		}
+		this.containerArray = curContainer;
+	}
+	
+	private void rotateRight() {
+		int[][] curContainer = new int[CONTAINER_SIZE][CONTAINER_SIZE];
+		
+		for (int i = 0; i < CONTAINER_SIZE; i++) {
+			for (int j = 0; j < CONTAINER_SIZE; j++) {
+				curContainer[i][j] = this.containerArray[CONTAINER_SIZE - j - 1][i];
+			}
+		}
+		this.containerArray = curContainer;
+	}
 }
